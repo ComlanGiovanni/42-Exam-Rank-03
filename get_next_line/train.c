@@ -5,63 +5,125 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/19 22:09:55 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/21 00:25:23 by gcomlan          ###   ########.fr       */
+/*   Created: 2022/08/22 13:42:39 by gcomlan           #+#    #+#             */
+/*   Updated: 2022/08/22 14:26:53 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+
+/*
+#include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
+#include <fcntl.h>
 
-int	ft_strlen(char *str)
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
+char *get_next_line(int fd)
 {
-	int	size;
+	int rd = 0;
+	char c;
+	char *buffer = malloc(101010);
+	int i = 0;
 
-	size = 0;
-	while (str[size] != '\0')
-		size++;
-	return (size);
-}
-
-char	*ft_strdup(char *str)
-{
-	int		length;
-	int		index;
-	char	*dup;
-
-	length = ft_strlen(str);
-	index = -1;
-	dup = malloc(length + 1);
-	if (!dup)
+	while((rd = read(fd, &c, BUFFER_SIZE - BUFFER_SIZE + 1)) > 0)
+	{
+		buffer[i] = c;
+		if (buffer[i] == '\n')
+		{
+			buffer[i + 1] = '\0';
+			return (buffer);
+		}
+		i++;
+	}
+	if (rd == -1 || i == 0 || (!rd && !buffer[i - 1]))
+	{
+		free(buffer);
 		return (NULL);
-	while (str[++index])
-		dup[index] = str[index];
-	dup[index] = 0;
-	return (dup);
+	}
+	buffer[i] = '\0';
+	return(buffer);
 }
+*/
+
+/*
+int main()
+{
+	int fd;
+	char *s;
+
+	fd = open("myfile.txt", O_RDONLY);
+	s = get_next_line(fd);
+	while (s != NULL)
+	{
+		printf("%s", s);
+		s = get_next_line(fd);
+	}
+	return (0);
+}
+*/
+
+/*
+#include <unistd.h>
+#include <stdlib.h>
 
 char	*get_next_line(int fd)
 {
-	char	buffer;
-	char	rtn[7000000];
-	int		n;
-	int		index;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
-	index = 0;
-	n = read(fd, &buffer, 1);
-	while (n > 0)
-	{
-		rtn[index++] = buffer;
-		if (buffer == '\n')
-			break ;
-		n = read(fd, &buffer, 1);
-	}
-	rtn[index] = 0;
-	if (n <= 0 && index == 0)
-		return (0);
-	return (ft_strdup(rtn));
+	int rd = 0;
+	char	c;
+	if ((rd = read(fd, &c, 1)) == 0)
+		return (NULL);
+	char	*line = malloc(100000);
+	char	*word = line;
+	*line++ = c;
+	while ((rd = read(fd, &c, 1)) > 0 && c != '\n')
+		*line++ = c;
+	if (c == '\n')
+		*line++ = '\n';
+	*line = '\0';
+	return (word);
 }
+*/
+
+/*
+#include <unistd.h>
+#include <stdlib.h>
+
+char *get_next_line(int fd)
+{
+    int 	i = 0;
+    int 	rd = 0;
+    char	character;
+    char 	*buffer = malloc(10000);
+
+    while ((rd = read(fd, &character, 1)) > 0)
+    {
+        buffer[i++] = character;
+        if (character == '\n')
+            break;
+    }
+    if ((!buffer[i - 1] && !rd) || rd == -1)
+    {
+        free(buffer);
+        return (NULL);
+    }
+    buffer[i] =  '\0';
+    return(buffer);
+}
+*/
+
+/*
+#include <unistd.h>
+#include <stdlib.h>
+
+char *get_next_line(int fd)
+{
+    char *s = malloc(10000), *c = s;
+    while (read(fd, c, 1) > 0 && *c++ != '\n');
+    return c > s ? (*c = 0, s) : (free(s), NULL);
+}
+*/

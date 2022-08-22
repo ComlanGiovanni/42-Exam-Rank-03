@@ -6,7 +6,7 @@
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 22:09:51 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/22 11:48:39 by gcomlan          ###   ########.fr       */
+/*   Updated: 2022/08/22 12:03:43 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ int	ft_printf(const char *format, ...)
 			format++;
 			if (*format == 's')
 				ft_put_str(va_arg(ptr, char *), &len);
-			else if (*format == 'x')
-				ft_put_digit((long long)va_arg(ptr, unsigned int), 16, &len);
 			else if (*format == 'd')
 				ft_put_digit((long long)va_arg(ptr, int), 10, &len);
+			else if (*format == 'x')
+				ft_put_digit((long long)va_arg(ptr, unsigned int), 16, &len);
 		}
 		format++;
 	}
