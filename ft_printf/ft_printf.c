@@ -6,7 +6,7 @@
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 22:09:07 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/20 19:48:13 by gcomlan          ###   ########.fr       */
+/*   Updated: 2022/08/21 10:54:59 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ int	ft_put_char(char c)
 
 int	ft_put_str(char *str)
 {
-	int	index;
+	int	length;
 
-	index = 0;
+	length = 0;
 	if (!str)
 		str = "(null)";
 	while (*str)
-		index += write(1, str++, 1);
-	return (index);
+		length += write(1, str++, 1);
+	return (length);
 }
 
 int	ft_put_nbr(long int number)
