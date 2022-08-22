@@ -6,10 +6,11 @@
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 13:14:15 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/22 13:22:00 by gcomlan          ###   ########.fr       */
+/*   Updated: 2022/08/23 00:34:22 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include <stdarg.h>
 #include <unistd.h>
 
@@ -49,7 +50,7 @@ int ft_printf(const char *format, ...) {
   }
   return (va_end(ptr), len);
 }
-
+*/
 /*
 #include <stdarg.h>
 #include <unistd.h>

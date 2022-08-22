@@ -1,6 +1,6 @@
 <img align="left" width="100" height="169" src="42_logo.png">
 
-		- The exam has 2 question .
+		- The exam has 2 question . ``ft_printf`` && ``get_next_line``
 		- You need to validate the 1 question to get 100.
 		- Each time you fail the exam you restart.
 		- There is no Norminette in the exam.

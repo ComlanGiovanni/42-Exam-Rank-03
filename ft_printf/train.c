@@ -6,7 +6,7 @@
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 22:09:51 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/22 19:29:36 by gcomlan          ###   ########.fr       */
+/*   Updated: 2022/08/23 01:22:05 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	put_digit(long long int nbr, int base, int *len)
 
 int	ft_printf(const char *format, ...)
 {
-	int		len;
-	va_list	ptr;
+	int			len;
+	va_list		ptr;
 
 	len = 0;
 	va_start(ptr, format);
@@ -59,11 +59,10 @@ int	ft_printf(const char *format, ...)
 			len += write(1, format, 1);
 		format++;
 	}
-
-
 	return (va_end(ptr), len);
 }
 
+/*
 #include <stdio.h>
 #include <limits.h>
 
@@ -97,3 +96,4 @@ int	main(void)
 	ft_printf("Hello world %\n");
 	return (0);
 }
+*/
