@@ -1,20 +1,22 @@
 <img align="left" width="100" height="169" src="42_logo.png">
 
-		- The exam has 4 random question picked from each level.
-		- You need to validate the 4 question to get 100.
-		- Each time you fail the exam you restart at level 1.
+		- The exam has 2 question .
+		- You need to validate the 1 question to get 100.
+		- Each time you fail the exam you restart.
 		- There is no Norminette in the exam.
 		- All the solution of the repo are normed(v3).
-		- 56 Assigment in total, all main in train.c of each one.
+		- 2 Assigment, all main in train.c of each one.
 
-
- ![norminette](https://badgen.net/badge/Norminette/42-Norminette-v3-Passed/green?icon=github&label)
+![main test](https://badgen.net/badge/main/Main-Test/red?icon=github&label)
+![norminette](https://badgen.net/badge/Norminette/42-Norminette-v3-Passed/green?icon=github&label)
+![clean code](https://badgen.net/badge/Readable&Clean-Code/Readable&Clean-Code/blue?icon=github&label)
+![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FComlanGiovanni%2F42-Exam-Rank-03&count_bg=%23BCC4B6&title_bg=%23A09898&icon=datacamp.svg&icon_color=%23FFFFFF&title=Views&edge_flat=false)](https://hits.seeyoufarm.com)
 
 ```
 	/* ************************************************************************** */
 	/*                                                                            */
 	/*                                                        :::      ::::::::   */
-	/*   42_Exam_Rank_02.c  (Version -> 2022)               :+:      :+:    :+:   */
+	/*   42_Exam_Rank_03.c  (Version -> 2022)               :+:      :+:    :+:   */
 	/*                                                    +:+ +:+         +:+     */
 	/*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 	/*                                                +#+#+#+#+#+   +#+           */
@@ -24,13 +26,16 @@
 	/* ************************************************************************** */
 ```
 
-If bugs, error, infinite loop, bad fct, better way to do things,, norme error, Don't Panic. Just make a pull request 💚
-
-<h1 align="center"> Acknowledgments </h1>
-
-* [Grademe](https://github.com/JCluzet/42_GradeMe) - [42 Binary Hackers](https://github.com/Binary-Hackers/42_Subjects) - [1337](https://github.com/48d31kh413k/1337-Piscine-42) - [Luta Wolf](https://github.com/luta-wolf/42-examrank) - [barimehdi77](https://github.com/barimehdi77/42-piscine-exam) - [jraleman](https://github.com/jraleman/42.Exam-C) - [Exam Miner](https://github.com/fwuensche/42-exam-miner) - [prossi Exam](https://github.com/pasqualerossi/42-School-Exam-Rank-02)
-
 <details>
-<summary></summary>
-Good Luck 🍀
+<summary>Good luck 💚</summary>
+
+```
+Any fool can write code that a computer can understand.
+Good programmers write code that humans can understand,
+so if you want to go fast, if you want to get done quickly,
+if you want your code to be easy to write, make it easy to read.
+
+Martin Fowler && Robert C. Martin
+```
+
 </details>
