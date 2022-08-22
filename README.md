@@ -10,7 +10,7 @@
 ![main test](https://badgen.net/badge/main/Main-Test/red?icon=github&label)
 ![norminette](https://badgen.net/badge/Norminette/42-Norminette-v3-Passed/green?icon=github&label)
 ![clean code](https://badgen.net/badge/Readable&Clean-Code/Readable&Clean-Code/blue?icon=github&label)
-![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FComlanGiovanni%2F42-Exam-Rank-03&count_bg=%23BCC4B6&title_bg=%23A09898&icon=datacamp.svg&icon_color=%23FFFFFF&title=Views&edge_flat=false)(https://hits.seeyoufarm.com)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FComlanGiovanni%2F42-Exam-Rank-03&count_bg=%23BCC4B6&title_bg=%23A09898&icon=datacamp.svg&icon_color=%23FFFFFF&title=Views&edge_flat=false)](https://hits.seeyoufarm.com)
 
 ```
 	/* ************************************************************************** */
