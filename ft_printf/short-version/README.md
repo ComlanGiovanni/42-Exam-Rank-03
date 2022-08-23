@@ -1,4 +1,3 @@
-
 ## Short Version
 - [Back](https://github.com/ComlanGiovanni/42-Exam-Rank-03/tree/main/ft_printf)
 	+ [short_0.c](https://github.com/ComlanGiovanni/42-Exam-Rank-03/blob/main/ft_printf/short-version/short_0.c)
