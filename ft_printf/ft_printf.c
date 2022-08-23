@@ -6,12 +6,12 @@
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 22:09:07 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/23 00:34:13 by gcomlan          ###   ########.fr       */
+/*   Updated: 2022/08/23 20:10:42 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include <unistd.h>
+#include <stdarg.h> // For va_lis, va_start, va_arg, va_copy, va_end
+#include <unistd.h> // For malloc, free, write
 
 void	put_str(char *str, int *len)
 {
