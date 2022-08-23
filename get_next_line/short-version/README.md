@@ -1,1 +1,1 @@
-<a href="https://imgflip.com/i/6qu7jr"><img src="https://i.imgflip.com/6qu7jr.jpg" title="made at imgflip.com"/></a><div><a href="https://imgflip.com/memegenerator">from Imgflip Meme Generator</a></div>
+<a href="https://imgflip.com/i/6qu7jr"><img src="https://i.imgflip.com/6qu7jr.jpg" title="made at imgflip.com"/></a><div><a href="https://grademe.fr/#">Did not test all the version please test before using those</a></div>
