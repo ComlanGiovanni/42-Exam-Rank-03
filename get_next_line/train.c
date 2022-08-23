@@ -6,41 +6,62 @@
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 13:42:39 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/23 01:20:26 by gcomlan          ###   ########.fr       */
+/*   Updated: 2022/08/23 10:26:52 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*#define BUFFER_SIZE 1*/
 
 #include <unistd.h>
 #include <stdlib.h>
 
-/*#define BUFFER_SIZE 1*/
-
 char	*get_next_line(int fd)
 {
-	int		byte;
 	int		index;
+	int		bytes;
 	char	character;
 	char	*buffer;
 
-	byte = 0;
-	index = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	index = 0;
+	bytes = read(fd, &character, 1);
 	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	byte = read(fd, &character, 1);
-	while (byte > 0)
+	while (bytes > 0)
 	{
 		buffer[index++] = character;
 		if (character == '\n')
 			break ;
-		byte = read(fd, &character, 1);
+		bytes = read(fd, &character, 1);
 	}
-	if (byte <= 0 && index == 0)
+	if ((bytes <= 0) && (index == 0))
 		return (free(buffer), NULL);
 	buffer[index] = '\0';
 	return (buffer);
 }
 
+/*
+#include <unistd.h>
+#include <stdlib.h>
+
+char	*get_next_line(int fd)
+{
+	int		index = 0;
+	int		bytes;
+	char	character;
+	if (fd < 0 || BUFFER_SIZE <= 0)	return (NULL);
+	char	*buffer = = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	while ((bytes = read(fd, &character, 1)) > 0)
+	{
+		buffer[index++] = character;
+		if (character == '\n')
+			break ;
+	}
+	if ((bytes <= 0) && (index == 0))	return (free(buffer), NULL);
+	buffer[index] = '\0';
+	return (buffer);
+}
+*/
 /*
 
 #include <stdarg.h>

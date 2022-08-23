@@ -6,14 +6,14 @@
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 22:09:51 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/23 01:22:05 by gcomlan          ###   ########.fr       */
+/*   Updated: 2022/08/23 10:07:41 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include <unistd.h>
 
-void	put_str(char *str, int *len)
+void	put_str(char *str, int *len);
 {
 	if (!str)
 		str = "(null)";
@@ -38,14 +38,14 @@ void	put_digit(long long int nbr, int base, int *len)
 
 int	ft_printf(const char *format, ...)
 {
-	int			len;
-	va_list		ptr;
+	int		len;
+	va_list	ptr;
 
 	len = 0;
 	va_start(ptr, format);
 	while (*format)
 	{
-		if ((*format == '%') && *(format + 1))
+		if (*format == '%')
 		{
 			format++;
 			if (*format == 's')
