@@ -1,4 +1,9 @@
 - [Back](https://github.com/ComlanGiovanni/42-Exam-Rank-03)
+
+- [get_next_line.c](https://github.com/ComlanGiovanni/42-Exam-Rank-03/blob/main/get_next_line/get_next_line.c)
+
+- [short-version](https://github.com/ComlanGiovanni/42-Exam-Rank-03/tree/main/get_next_line/short-version)
+
 ```
 Assignment name : get_next_line
 Expected files : get_next_line.c
