@@ -1,6 +1,6 @@
-<img align="left" width="100" height="169" src="42_logo.png">
+------->  ``ft_printf`` && ``get_next_line``
 
-	-  ``ft_printf`` && ``get_next_line``
+<img align="left" width="100" height="169" src="42_logo.png">
 
 		- The exam has 2 question . 1 is picked randomly !
 		- You need to validate 1 question to get 100.
