@@ -6,60 +6,63 @@
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 23:00:08 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/22 23:34:23 by gcomlan          ###   ########.fr       */
+/*   Updated: 2022/08/23 11:16:21 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
 
-int	ft_strlen(char *str)
+int	ft_str_length(char *string)
 {
-	int	i;
+	int	index;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	index = 0;
+	while (string[index] != '\0')
+		index++;
+	return (index);
 }
 
-char	*ft_strdup(char *str)
+char	*ft_str_duplicate(char *string)
 {
-	int		len;
-	int		i;
-	char	*dup;
+	int		index;
+	int		length;
+	char	*duplicate;
 
-	len = ft_strlen(str);
-	i = -1;
-	dup = malloc(len + 1);
-	if (!dup)
+	length = ft_str_length(string);
+	index = 0;
+	duplicate = (char *)malloc(sizeof(char) * length + 1);
+	if (!duplicate)
 		return (NULL);
-	while (str[++i])
-		dup[i] = str[i];
-	dup[i] = 0;
-	return (dup);
+	while (string[index] != '\0')
+	{
+		duplicate[index] = string[index];
+		index++;
+	}
+	duplicate[index] = '\0';
+	return (duplicate);
 }
 
 char	*get_next_line(int fd)
 {
-	char	buffer;
-	char	rtn[7000000];
 	int		n;
-	int		i;
+	int		index;
+	char	character;
+	char	buffer[7000000];
 
+	index = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
-	i = 0;
-	n = read(fd, &buffer, 1);
+		return (NULL);
+	n = read(fd, &character, 1);
 	while (n > 0)
 	{
-		rtn[i++] = buffer;
-		if (buffer == '\n')
+		buffer[index++] = character;
+		if (character == '\n')
 			break ;
-		n = read(fd, &buffer, 1);
+		n = read(fd, &character, 1);
 	}
-	rtn[i] = 0;
-	if (n <= 0 && i == 0)
-		return (0);
-	return (ft_strdup(rtn));
+	if (n <= 0 && index == 0)
+		return (NULL);
+	buffer[index] = '\0';
+	return (ft_str_duplicate(buffer));
 }

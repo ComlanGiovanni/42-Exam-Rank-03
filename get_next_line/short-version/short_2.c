@@ -6,31 +6,31 @@
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 23:00:14 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/22 23:30:09 by gcomlan          ###   ########.fr       */
+/*   Updated: 2022/08/23 11:19:22 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
 
-char	*get_next_line(int fd)
+char *get_next_line(int fd)
 {
-	int		n;
-	int		index;
-	char	character;
-	char	*buffer = (char *)malloc(sizeof(char) * 10000);
+    int 	i = 0;
+    int 	rd = 0;
+    char	c;
+    char 	*buff = malloc(10000);
 
-	index = 0;
-	if (fd < 0 || BUFFER_SIZE <= 0)
-        return (free(buffer), NULL);
-	while ((n = read(fd, &character, 1)) > 0)
-	{
-		buffer[index++] = character;
-		if (character == '\n')
-			break ;
-	}
-	if (n <= 0 && index == 0)
-		return (free(buffer), NULL);
-	buffer[index] = '\0';
-	return (buffer);
+    while ((rd = read(fd, &c, 1)) > 0)
+    {
+        buff[i++] = c;
+        if (c == '\n')
+            break ;
+    }
+    if ((!buff[i - 1] && !rd) || rd == -1)
+    {
+        free(buff);
+        return (NULL);
+    }
+    buff[i] =  '\0';
+    return(buff);
 }

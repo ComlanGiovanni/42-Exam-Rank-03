@@ -6,14 +6,12 @@
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 22:09:51 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/22 00:33:18 by gcomlan          ###   ########.fr       */
+/*   Updated: 2022/08/23 11:08:59 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include <unistd.h>
-
-#define HEXA "0123456789abcdef"
 
 int	ft_put_char(char c)
 {
@@ -44,7 +42,7 @@ int	ft_put_digits(long long nbr, int base)
 	}
 	if (nbr >= base)
 		len += ft_put_digits((nbr / base), base);
-	len += ft_put_char(HEXA[nbr % base]);
+	len += ft_put_char("0123456789abcdef"[nbr % base]);
 	return (len);
 }
 

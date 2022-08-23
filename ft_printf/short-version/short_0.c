@@ -6,7 +6,7 @@
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 22:59:59 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/23 00:35:52 by gcomlan          ###   ########.fr       */
+/*   Updated: 2022/08/23 11:08:28 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,67 +96,3 @@ int	ft_printf(const char *format, ...)
 	va_end(argument);
 	return (length);
 }
-
-/*
-#include <stdarg.h>
-#include <unistd.h>
-
-void	put_string(char *string, int *length)
-{
-	if (!string)
-		string = "(null)";
-	while (*string)
-		*length += write(1, string++, 1);
-}
-
-void	put_digit(long long int number, int base, int *length)
-{
-	char	*hexadecimal;
-
-	hexadecimal = "0123456789abcdef";
-	if (number < 0)
-	{
-		number *= -1;
-		*length += write(1, "-", 1);
-	}
-	if (number >= base)
-		put_digit((number / base), base, length);
-	*length += write(1, &hexadecimal[number % base], 1);
-}
-
-int	ft_printf(const char *format, ...)
-{
-	int				length;
-	va_list			pointer;
-	long long int	decimal;
-	long long int	hexadecimal;
-
-	length = 0;
-	decimal = 0;
-	hexadecimal = 0;
-	va_start(pointer, format);
-	while (*format)
-	{
-		if ((*format == '%') && *(format + 1))
-		{
-			format++;
-			if (*format == 's')
-				put_string(va_arg(pointer, char *), &length);
-			else if (*format == 'd')
-			{
-				decimal = (long long int)va_arg(pointer, int);
-				put_digit(decimal, 10, &length);
-			}
-			else if (*format == 'x')
-			{
-				hexadecimal = (long long int)va_arg(pointer, unsigned int);
-				put_digit(hexadecimal, 16, &length);
-			}
-		}
-		else
-			length += write(1, format, 1);
-		format++;
-	}
-	return (va_end(pointer), length);
-}
-*/

@@ -6,7 +6,7 @@
 /*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 13:42:39 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/23 10:26:52 by gcomlan          ###   ########.fr       */
+/*   Updated: 2022/08/23 11:14:56 by gcomlan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int	ft_printf(const char *format, ...)
 }
 
 */
+/*
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -144,5 +145,7 @@ int	main(int argc, char **argv)
 	}
 	return (0);
 }
+
+*/
 
 //gcc -Wall -Werror -Wextra train.c -D BUFFER_SIZE=10 && ./a.out train.c
