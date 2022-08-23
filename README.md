@@ -1,4 +1,4 @@
-------->  ``ft_printf`` && ``get_next_line``
+Exam Rank 2 ------->  ``ft_printf`` || ``get_next_line``
 
 <img align="left" width="100" height="169" src="42_logo.png">
 
