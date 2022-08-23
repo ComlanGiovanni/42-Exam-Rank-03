@@ -1,4 +1,4 @@
-Exam Rank 2 ------->  [ft_printf](https://github.com/ComlanGiovanni/42-Exam-Rank-03/blob/main/ft_printf/ft_printf.c) | | ``get_next_line``
+Exam Rank 2 ------->  [ft_printf](https://github.com/ComlanGiovanni/42-Exam-Rank-03/blob/main/ft_printf/ft_printf.c) | | [get_next_line](https://github.com/ComlanGiovanni/42-Exam-Rank-03/blob/main/get_next_line/get_next_line.c)
 
 <img align="left" width="100" height="169" src="42_logo.png">
 
