@@ -6,7 +6,7 @@
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 00:35:55 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/08/29 10:47:35 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/08/29 12:26:07 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	ft_put_digit(uintmax_t number, int base, int *length, int is_signed)
 	hexadecimal = "0123456789abcdef";
 	if (is_signed && ((intmax_t)number < 0x0))
 	{
-		number = -(intmax_t)number;
+		number = - (intmax_t)number;
 		*length += write(STDOUT_FILENO, "-", sizeof(char));
 	}
 	if (number >= (uintmax_t)base)
@@ -59,7 +59,7 @@ static void	ft_put_digit(uintmax_t number, int base, int *length, int is_signed)
 static void	ft_handle_format(const char *format, va_list arguments, int *length)
 {
 	if (*format == '%')
-		ft_put_string("%", length);
+		ft_put_string('%', length);
 	else if (*format == 's')
 		ft_put_string(va_arg(arguments, char *), length);
 	else if (*format == 'd')
@@ -72,20 +72,20 @@ static void	ft_handle_format(const char *format, va_list arguments, int *length)
 
 int	ft_printf(const char *format, ...)
 {
-	int		length;
-	va_list	arguments;
+	int			length;
+	va_list		arguments;
 
 	length = 0x0;
 	va_start(arguments, format);
 	while (*format)
 	{
-		if (*format == '%' && *(format + 0x1))
+		if ((*format == '%') && *(format + 0x1))
 		{
 			format++;
 			ft_handle_format(format, arguments, &length);
 		}
 		else
-			length += write(STDOUT_FILENO, format, 0x1);
+			length += write(STDOUT_FILENO, format, sizeof(char));
 		format++;
 	}
 	va_end(arguments);

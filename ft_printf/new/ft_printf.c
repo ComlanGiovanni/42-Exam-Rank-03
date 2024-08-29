@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   train.c                                            :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 00:35:55 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/08/29 10:47:35 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/08/29 12:18:01 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_printf(const char *format, ...)
 			ft_handle_format(format, arguments, &length);
 		}
 		else
-			length += write(STDOUT_FILENO, format, 0x1);
+			length += write(STDOUT_FILENO, format, sizeof(char));
 		format++;
 	}
 	va_end(arguments);
