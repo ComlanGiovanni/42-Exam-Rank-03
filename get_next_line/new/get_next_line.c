@@ -6,7 +6,7 @@
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:03:10 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/08/29 12:01:16 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:17:43 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,20 @@ static char	*ft_strchr(char *string, int character)
 	return (NULL);
 }
 
-static char	*ft_strcpy(char *destination, char *source)
-{
-	static char	*destination_copy;
+// static char	*ft_strcpy(char *destination, char *source)
+// {
+// 	static char	*destination_copy;
 
-	destination_copy = destination;
-	while (*source)
-	{
-		*destination_copy = *source;
-		destination_copy++;
-		source++;
-	}
-	*destination_copy = '\0';
-	return (destination);
-}
+// 	destination_copy = destination;
+// 	while (*source)
+// 	{
+// 		*destination_copy = *source;
+// 		destination_copy++;
+// 		source++;
+// 	}
+// 	*destination_copy = '\0';
+// 	return (destination);
+// }
 
 static char	*ft_strcpy(char *destination, char *source)
 {
@@ -132,11 +132,21 @@ static void	ft_update_buffer_and_line(char *buffer, char *new_line_in_line)
 {
 	if (new_line_in_line)
 	{
-		buffer = ft_strcpy(buffer, (new_line_in_line + 0x1));
-		*(new_line_in_line + 0x1) = '\0';
+		// Check if there is valid data after the newline
+		if (*(new_line_in_line + 1) != '\0')
+		{
+			ft_strcpy(buffer, (new_line_in_line + 1));
+		}
+		else
+		{
+			buffer[0] = '\0';  // Clear the buffer if nothing follows the newline
+		}
+		*new_line_in_line = '\0';  // Terminate the line at the newline character
 	}
 	else
-		buffer[0x0] = '\0';
+	{
+		buffer[0] = '\0';  // Clear the buffer if no newline found
+	}
 }
 
 char	*get_next_line(int fd)
