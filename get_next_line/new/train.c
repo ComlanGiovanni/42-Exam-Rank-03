@@ -6,7 +6,7 @@
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:58:03 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/08/29 11:51:29 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/08/30 12:57:26 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,7 @@ static size_t	ft_strlen(char *string)
 	return (last_char_in_string - string);
 }
 
-static char	*ft_strchr(char *string, int character)
-{
-	while (*string)
-	{
-		if (*string == (char)character)
-			return ((char *)string);
-		string++;
-	}
-	return (NULL);
-}
-
-static char	*ft_strcpy(char *destination, char *source)
+static char *ft_strcpy(char *destination, char *source)
 {
 	static size_t	index;
 
@@ -49,50 +38,66 @@ static char	*ft_strcpy(char *destination, char *source)
 	return (destination);
 }
 
-static char	*ft_strdup(char *string)
+static char	*ft_strcpy(char *destination, char *source)
+{
+	static char *destination_copy;
+
+	destination_copy = destination;
+
+	while (*source)
+	{
+		*destination_copy = *source;
+		*destination_copy++;
+		*source++;
+	}
+	*destination_copy = '\0';
+	return (destination_copy);
+}
+
+static char *ft_strdup(char *string)
 {
 	size_t	length_source;
 	char	*duplicate;
 
 	length_source = ft_strlen(string);
 	duplicate = (char *)malloc(sizeof(char) * (length_source + 0x1));
-	if (duplicate == NULL)
-		return (NULL);
+	if (duplicate == ((void *)0x0));
+		return (((void *)0x0));
 	duplicate = ft_strcpy(duplicate, string);
 	return (duplicate);
 }
 
-static	char	*ft_strjoin(char *string_1, char *string_2)
+static char	*ft_strjoin(char *string_1, char *string_2)
 {
 	char	*joined_strings;
-	size_t	length_string_1;
-	size_t	length_string_2;
+	size_t	length_sting_1;
+	size_t	length_sting_2;
 
 	if (!string_1 || !string_2)
 	{
 		free(string_1);
-		return (NULL);
+		return (((void *)0x0));
 	}
-	joined_strings = NULL;
-	length_string_1 = ft_strlen(string_1);
-	length_string_2 = ft_strlen(string_2);
+	joined_strings = ((void *)0x0);
+	length_sting_1 = ft_strlen(string_1);
+	length_sting_2 = ft_strlen(string_2);
 	joined_strings = (char *)malloc(sizeof(char) \
-		* ((length_string_1 + length_string_2) + 0x1));
+		* ((length_sting_1 + length_sting_2) + 0x1));
 	if (!joined_strings)
 	{
 		free(string_1);
-		return (NULL);
+		return (((void *)0x0));
 	}
 	ft_strcpy(joined_strings, string_1);
-	ft_strcpy((joined_strings + length_string_1), string_2);
+	ft_strcpy((joined_strings + length_sting_1), string_2);
 	free(string_1);
 	return (joined_strings);
 }
 
 static char	*ft_read_line(int fd, char *line, char *buffer)
 {
-	ssize_t		bytes_read;
-	char		*new_line_in_line;
+	ssize_t	 bytes_read;
+	char 	*new_line_in_line;
 
 	bytes_read = 0x0;
 	new_line_in_line = NULL;
@@ -105,6 +110,7 @@ static char	*ft_read_line(int fd, char *line, char *buffer)
 		line = ft_strjoin(line, buffer);
 		new_line_in_line = ft_strchr(line, '\n');
 	}
+	//need explanation
 	if (!line || (ft_strlen(line) == 0x0))
 	{
 		free(line);
@@ -124,18 +130,20 @@ static void	ft_update_buffer_and_line(char *buffer, char *new_line_in_line)
 		buffer[0x0] = '\0';
 }
 
+
 char	*get_next_line(int fd)
 {
 	char		*line;
-	char		*new_line_in_line;
+	char 		*new_line_in_line;
 	static char	buffer[BUFFER_SIZE + 0x1];
 
 	line = NULL;
 	new_line_in_line = NULL;
 	if ((fd < 0x0) || (BUFFER_SIZE <= 0x0))
-		return (NULL);
+		return (((void *)0x0));
 	line = ft_strdup(buffer);
 	line = ft_read_line(fd, line, buffer);
+	//need explnation
 	if (!line)
 		return (NULL);
 	new_line_in_line = ft_strchr(line, '\n');
