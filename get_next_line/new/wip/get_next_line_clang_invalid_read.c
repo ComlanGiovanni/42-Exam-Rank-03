@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_clang_invalid_read.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:03:10 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/09/17 14:17:43 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:12:33 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+# include <unistd.h> //For write STDOUT_FILENO read
+# include <stdlib.h> //For EXIT_SUCCESS malloc free
+# define BUFFER_SIZE 42
 
 static size_t	ft_strlen(char *string)
 {
@@ -34,21 +36,6 @@ static char	*ft_strchr(char *string, int character)
 	}
 	return (NULL);
 }
-
-// static char	*ft_strcpy(char *destination, char *source)
-// {
-// 	static char	*destination_copy;
-
-// 	destination_copy = destination;
-// 	while (*source)
-// 	{
-// 		*destination_copy = *source;
-// 		destination_copy++;
-// 		source++;
-// 	}
-// 	*destination_copy = '\0';
-// 	return (destination);
-// }
 
 static char	*ft_strcpy(char *destination, char *source)
 {
@@ -132,22 +119,13 @@ static void	ft_update_buffer_and_line(char *buffer, char *new_line_in_line)
 {
 	if (new_line_in_line)
 	{
-		// Check if there is valid data after the newline
-		if (*(new_line_in_line + 1) != '\0')
-		{
-			ft_strcpy(buffer, (new_line_in_line + 1));
-		}
-		else
-		{
-			buffer[0] = '\0';  // Clear the buffer if nothing follows the newline
-		}
-		*new_line_in_line = '\0';  // Terminate the line at the newline character
+		buffer = ft_strcpy(buffer, (new_line_in_line + 0x1));
+		*(new_line_in_line + 0x1) = '\0';
 	}
 	else
-	{
-		buffer[0] = '\0';  // Clear the buffer if no newline found
-	}
+		buffer[0x0] = '\0';
 }
+
 
 char	*get_next_line(int fd)
 {
@@ -166,4 +144,47 @@ char	*get_next_line(int fd)
 	new_line_in_line = ft_strchr(line, '\n');
 	ft_update_buffer_and_line(buffer, new_line_in_line);
 	return (line);
+}
+
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <sys/uio.h>
+#include <sys/types.h>
+
+int	main(int argc, char const *argv[])
+{
+	if (argc > 3)
+		return (0);
+	int		fd;
+	int		i;
+	char	*line;
+
+	fd = open(argv[1], O_RDONLY);
+	/* test invalid file descriptor, stdin*/
+	if (argc == 3)
+	{
+		fd = atoi(argv[2]);
+		printf("fd: %d\n", fd);
+	}
+	i = 0;
+	while (1)
+	{
+		line = get_next_line(fd);
+		// printf("\nline: |%s|\n", line);
+		printf("%d: ", i);
+		printf("%s \n", line);
+
+		if (line == NULL)
+			break ;
+		free(line);
+		i++;
+		/* test if still reachable (memory)*/
+		// if (i == 2)
+		// 	break ;
+	}
+	close(fd);
+	return (1);
 }
