@@ -3,61 +3,90 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 22:09:07 by gcomlan           #+#    #+#             */
-/*   Updated: 2022/08/23 20:10:42 by gcomlan          ###   ########.fr       */
+/*   Updated: 2024/09/19 23:30:18 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h> // For va_lis, va_start, va_arg, va_copy, va_end
 #include <unistd.h> // For malloc, free, write
+#include <stdint.h>  // Pour intmax_t
+#include <stdbool.h> // Pour true and false
 
-void	put_str(char *str, int *len)
+#define DECIMAL_BASE 0xa
+#define HEXADECIMAL_BASE 0x10
+
+static size_t	ft_strlen(char *string)
 {
-	if (!str)
-		str = "(null)";
-	while (*str)
-		*len += write(1, str++, 1);
+	const char	*last_char_of_string;
+
+	if (!string)
+		return (0x0);
+	last_char_of_string = string;
+	while (*last_char_of_string)
+		last_char_of_string++;
+	return (last_char_of_string - string);
 }
 
-void	put_digit(long long int nbr, int base, int *len)
+static void	ft_put_string(char *string, int *length)
 {
-	char	*hexa;
+	size_t	string_length;
 
-	hexa = "0123456789abcdef";
-	if (nbr < 0)
+	if (!string)
+		string = "(null)";
+	string_length = ft_strlen(string);
+	*length += write(STDOUT_FILENO, string, string_length);
+}
+
+static void	ft_put_digit(uintmax_t number, int base, int *length, int is_signed)
+{
+	char	*hexadecimal;
+
+	hexadecimal = "0123456789abcdef";
+	if (is_signed && ((intmax_t)number < 0x0))
 	{
-		nbr *= -1;
-		*len += write(1, "-", 1);
+		number = -(intmax_t)number;
+		*length += write(STDOUT_FILENO, "-", sizeof(char));
 	}
-	if (nbr >= base)
-		put_digit((nbr / base), base, len);
-	*len += write(1, &hexa[nbr % base], 1);
+	if (number >= (uintmax_t)base)
+		ft_put_digit((number / base), base, length, false);
+	*length += write(STDOUT_FILENO, &hexadecimal[number % base], sizeof(char));
+}
+
+static void	ft_handle_format(const char *format, va_list arguments, int *length)
+{
+	if (*format == '%')
+		ft_put_string("%", length);
+	else if (*format == 's')
+		ft_put_string(va_arg(arguments, char *), length);
+	else if (*format == 'd')
+		ft_put_digit((intmax_t)va_arg(arguments, int), \
+			DECIMAL_BASE, length, true);
+	else if (*format == 'x')
+		ft_put_digit(va_arg(arguments, unsigned int), \
+			HEXADECIMAL_BASE, length, false);
 }
 
 int	ft_printf(const char *format, ...)
 {
-	int			len;
-	va_list		ptr;
+	int		length;
+	va_list	arguments;
 
-	len = 0;
-	va_start(ptr, format);
+	length = 0x0;
+	va_start(arguments, format);
 	while (*format)
 	{
-		if ((*format == '%') && *(format + 1))
+		if (*format == '%' && *(format + 0x1))
 		{
 			format++;
-			if (*format == 's')
-				put_str(va_arg(ptr, char *), &len);
-			else if (*format == 'd')
-				put_digit((long long int)va_arg(ptr, int), 10, &len);
-			else if (*format == 'x')
-				put_digit((long long int)va_arg(ptr, unsigned int), 16, &len);
+			ft_handle_format(format, arguments, &length);
 		}
 		else
-			len += write(1, format, 1);
+			length += write(STDOUT_FILENO, format, sizeof(char));
 		format++;
 	}
-	return (va_end(ptr), len);
+	va_end(arguments);
+	return (length);
 }

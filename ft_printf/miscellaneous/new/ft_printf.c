@@ -6,16 +6,15 @@
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 00:35:55 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/08/29 12:18:01 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/09/19 23:29:03 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h> // For va_lis, va_start, va_arg, va_copy, va_end
 #include <unistd.h> // For malloc, free, write
 #include <stdint.h>  // Pour intmax_t
+#include <stdbool.h> // Pour true and false
 
-#define TRUE 0x1
-#define FALSE 0x0
 #define DECIMAL_BASE 0xa
 #define HEXADECIMAL_BASE 0x10
 
@@ -52,7 +51,7 @@ static void	ft_put_digit(uintmax_t number, int base, int *length, int is_signed)
 		*length += write(STDOUT_FILENO, "-", sizeof(char));
 	}
 	if (number >= (uintmax_t)base)
-		ft_put_digit((number / base), base, length, FALSE);
+		ft_put_digit((number / base), base, length, false);
 	*length += write(STDOUT_FILENO, &hexadecimal[number % base], sizeof(char));
 }
 
@@ -64,10 +63,10 @@ static void	ft_handle_format(const char *format, va_list arguments, int *length)
 		ft_put_string(va_arg(arguments, char *), length);
 	else if (*format == 'd')
 		ft_put_digit((intmax_t)va_arg(arguments, int), \
-			DECIMAL_BASE, length, TRUE);
+			DECIMAL_BASE, length, true);
 	else if (*format == 'x')
 		ft_put_digit(va_arg(arguments, unsigned int), \
-			HEXADECIMAL_BASE, length, FALSE);
+			HEXADECIMAL_BASE, length, false);
 }
 
 int	ft_printf(const char *format, ...)
