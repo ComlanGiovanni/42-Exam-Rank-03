@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   train.c                                            :+:      :+:    :+:   */
+/*   exam_rank_03.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/29 00:35:55 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/09/20 11:05:11 by gicomlan         ###   ########.fr       */
+/*   Created: 2024/08/28 16:58:03 by gicomlan          #+#    #+#             */
+/*   Updated: 2024/09/20 11:26:03 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdint.h>
+#include <stdlib.h> // For EXIT_SUCCESS, malloc, free, atoi
+#include <unistd.h> // For write, STDOUT_FILENO, read, stddef -> ssize_t NULL
+
+//#define BUFFER_SIZE 42 // put it in command and compile with -D BUFFER_SIZE=xx
+
+// man 2 open to get the include and the flags for open
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+#include <stdio.h> //For printf and perror
+#include <stdarg.h> // For va_lis, va_start, va_arg, va_copy, va_end
+#include <stdint.h>  // Pour intmax_t
+//#include <string.h> // For strcmp
 #include <limits.h>
-#include <stdbool.h>
+#include <stdbool.h> // For INT_MAX INT_MIN UINT_MAX
 
 static size_t	ft_strlen(char *string)
 {
@@ -69,6 +78,136 @@ static void	ft_handle_format(const char *format, va_list arguments, int *length)
 			0x10, length, false);
 }
 
+static int	ft_strcmp(char *s1, char *s2)
+{
+	while (*s1++ == *s2++)
+		if (!*s1 && !*s2)
+			return (0x0);
+	return (*--s1 - *--s2);
+}
+
+static char	*ft_strchr(char *string, int character)
+{
+	while (*string)
+	{
+		if (*string == (char)character)
+			return (string);
+		string++;
+	}
+	return (NULL);
+}
+
+static char	*ft_strcpy(char *destination, char *source)
+{
+	static size_t	index;
+
+	index = 0x0;
+	while (source[index] != '\0')
+	{
+		destination[index] = source[index];
+		index++;
+	}
+	destination[index] = '\0';
+	return (destination);
+}
+
+static char	*ft_strdup(char *string)
+{
+	size_t	length_source;
+	char	*duplicate;
+
+	length_source = 0x0;
+	duplicate = NULL;
+	if (!string)
+		return (NULL);
+	length_source = ft_strlen(string);
+	duplicate = (char *)malloc(sizeof(char) * (length_source + 0x1));
+	if (duplicate == NULL)
+		return (NULL);
+	ft_strcpy(duplicate, string);
+	return (duplicate);
+}
+
+static char	*ft_strjoin(char *string_one, char *string_two)
+{
+	char	*joined_strings;
+	size_t	length_string_one;
+	size_t	length_string_two;
+
+	if (!string_one || !string_two)
+	{
+		free(string_one);
+		return (NULL);
+	}
+	length_string_one = ft_strlen(string_one);
+	length_string_two = ft_strlen(string_two);
+	joined_strings = (char *)malloc(sizeof(char) * \
+		((length_string_one + length_string_two) + 0x1));
+	if (!joined_strings)
+	{
+		free(string_one);
+		return (NULL);
+	}
+	ft_strcpy(joined_strings, string_one);
+	ft_strcpy((joined_strings + length_string_one), string_two);
+	free(string_one);
+	return (joined_strings);
+}
+
+static void	ft_update_buffer_and_line(char *buffer, char *new_line_in_line)
+{
+	if (new_line_in_line)
+	{
+		ft_strcpy(buffer, (new_line_in_line + 0x1));
+		*(new_line_in_line + 0x1) = '\0';
+	}
+	else
+		buffer[0x0] = '\0';
+}
+
+static	char	*ft_read_line(int fd, char *line, char *buffer)
+{
+	ssize_t	bytes_read;
+	char	*new_line_in_line;
+
+	bytes_read = 0x0;
+	new_line_in_line = NULL;
+	while (!new_line_in_line)
+	{
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read <= 0x0)
+			break ;
+		buffer[bytes_read] = '\0';
+		line = ft_strjoin(line, buffer);
+		new_line_in_line = ft_strchr(line, '\n');
+	}
+	if (!line || ft_strlen(line) == 0x0)
+	{
+		free(line);
+		return (NULL);
+	}
+	return (line);
+}
+
+static char	*get_next_line(int fd)
+{
+	char		*line;
+	char		*new_line_in_line;
+	static char	buffer[BUFFER_SIZE + 0x1] = {'\0'};
+
+	line = NULL;
+	new_line_in_line = NULL;
+	if ((fd < 0x0) || (BUFFER_SIZE <= 0x0))
+		return (NULL);
+	line = ft_strdup(buffer);
+	line = ft_read_line(fd, line, buffer);
+	if (!line)
+		return (NULL);
+	new_line_in_line = ft_strchr(line, '\n');
+	ft_update_buffer_and_line(buffer, new_line_in_line);
+	return (line);
+}
+
 static int	ft_printf(const char *format, ...)
 {
 	int		length;
@@ -89,6 +228,61 @@ static int	ft_printf(const char *format, ...)
 	}
 	va_end(arguments);
 	return (length);
+}
+
+static int	ft_open_file(char *filename)
+{
+	int	file_descriptor;
+
+	file_descriptor = open(filename, O_RDONLY);
+	if (file_descriptor == -1)
+	{
+		perror("Error while opening file");
+		return (-1);
+	}
+	return (file_descriptor);
+}
+
+static void	ft_read_and_print_lines(int file_descriptor)
+{
+	char	*line;
+	int		index;
+	int		reading;
+
+	index = 0x0;
+	reading = 0x1;
+	while (reading)
+	{
+		line = get_next_line(file_descriptor);
+		if (line == NULL)
+			break ;
+		if (ft_strcmp(line, "exit\n") == 0x0 || ft_strcmp(line, "exit") == 0x0)
+		{
+			free(line);
+			break ;
+		}
+		ft_printf("%s", line);
+		free(line);
+		index++;
+	}
+	ft_printf("\n-------------------------------\n");
+	ft_printf("\nPrinting file complete.\n");
+	ft_printf("\n------------------------------- \n");
+}
+
+static void	ft_test_specific_file(char *string)
+{
+	int	file_descriptor;
+
+	ft_printf("\nTesting %s :\n", string);
+	file_descriptor = ft_open_file(string);
+	if (file_descriptor == -1)
+	{
+		ft_printf("Failed to open %s file.\n", string);
+		return ;
+	}
+	ft_read_and_print_lines(file_descriptor);
+	close(file_descriptor);
 }
 
 static void	ft_string_tests(void)
@@ -182,6 +376,26 @@ static void	ft_check_ft_printf(void)
 
 int	main(int argc, char **argv)
 {
+	int	file_descriptor;
+
 	ft_check_ft_printf();
+	if (argc > 0x2)
+	{
+		ft_printf("Usage: %s <filename>\n", argv[0x0]);
+		return (EXIT_FAILURE);
+	}
+	else if (argc == 0x1)
+		file_descriptor = STDIN_FILENO;
+	else
+	{
+		file_descriptor = ft_open_file(argv[1]);
+		if (file_descriptor == -1)
+			return (EXIT_FAILURE);
+	}
+	ft_read_and_print_lines(file_descriptor);
+	if (file_descriptor != STDIN_FILENO)
+		close(file_descriptor);
+	ft_test_specific_file("this_file_doest_exit.txt");
+	ft_test_specific_file("exam.out");
 	return (EXIT_SUCCESS);
 }

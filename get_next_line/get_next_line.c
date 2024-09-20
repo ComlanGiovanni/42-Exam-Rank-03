@@ -6,14 +6,12 @@
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:03:10 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/09/19 23:19:22 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/09/20 11:00:33 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h> // For write, STDOUT_FILENO, read
-#include <stdlib.h> // For EXIT_SUCCESS, malloc, free
-
-#define BUFFER_SIZE 42 // put it in command and compile with -D BUFFER_SIZE=xx
+#include <unistd.h>
+#include <stdlib.h>
 
 size_t	ft_strlen(char *string)
 {
@@ -143,56 +141,3 @@ char	*get_next_line(int fd)
 	ft_update_buffer_and_line(buffer, new_line_in_line);
 	return (line);
 }
-
-// Include your main function and other includes here
-
-/*
-cc -o gnl -Wall -Werror -Wextra -D BUFFER_SIZE=88 get_next_line.c &&
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
---show-reachable=yes --track-origins=yes ./gnl get_next_line.c
-*/
-// #include <unistd.h>
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <fcntl.h>
-// #include <sys/uio.h>
-// #include <sys/types.h>
-
-// int main(int argc, char const *argv[])
-// {
-// 	if (argc > 0x3)
-// 		return (0x0);
-// 	int	 fd;
-// 	int	 i;
-// 	char	*line;
-
-// 	fd = open(argv[1], O_RDONLY);
-// 	if (fd == -1)
-// 	{
-// 		perror("Error opening file");
-// 		return (1);
-// 	}
-// 	/* test invalid file descriptor, stdin*/
-// 	if (argc == 3)
-// 	{
-// 		fd = atoi(argv[2]);
-// 		printf("fd: %d\n", fd);
-// 	}
-// 	i = 0x0;
-// 	while (0x1)
-// 	{
-// 		line = get_next_line(fd);
-// 		printf("%d: ", i);
-// 		if (line == NULL)
-// 		{
-// 			printf("(null)\n");
-// 			break ;
-// 		}
-// 		printf("%s", line);
-// 		free(line);
-// 		i++;
-// 	}
-// 	if (fd >= 0)
-// 		close(fd);
-// 	return (1);
-// }

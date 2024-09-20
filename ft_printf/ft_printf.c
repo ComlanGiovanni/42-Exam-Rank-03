@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/19 22:09:07 by gcomlan           #+#    #+#             */
-/*   Updated: 2024/09/19 23:30:18 by gicomlan         ###   ########.fr       */
+/*   Created: 2024/09/20 09:44:34 by gicomlan          #+#    #+#             */
+/*   Updated: 2024/09/20 09:44:36 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_printf(const char *format, ...)
 	va_start(arguments, format);
 	while (*format)
 	{
-		if (*format == '%' && *(format + 0x1))
+		if ((*format == '%') && *(format + 0x1))
 		{
 			format++;
 			ft_handle_format(format, arguments, &length);
