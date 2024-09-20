@@ -6,7 +6,7 @@
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:58:03 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/09/20 12:24:28 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:26:40 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -376,7 +376,22 @@ static void	ft_check_ft_printf(void)
 	ft_edge_case_tests();
 	ft_printf("Testing ft_printf complete.\n");
 }
-
+/**
+ * @brief
+ *
+ * clear && clang -o exam.out -D BUFFER_SIZE=1 exam_rank_03.c &&
+ * valgrind
+ * --leak-check=full
+ * --show-leak-kinds=all
+ * --track-fds=yes
+ * --show-reachable=yes
+ * --track-origins=yes
+ * ./exam.out
+ *
+ * @param argc
+ * @param argv
+ * @return int
+ */
 int	main(int argc, char **argv)
 {
 	int	file_descriptor;
