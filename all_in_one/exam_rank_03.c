@@ -6,7 +6,7 @@
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:58:03 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/09/20 12:18:02 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:24:28 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,6 @@ static void	ft_put_string(char *string, int *length)
 	*length += write(STDOUT_FILENO, string, string_length);
 }
 
-// static void	ft_put_digit(uintmax_t number, int base, \
-// 	int *length, bool is_signed)
-// {
-// 	char	*hexadecimal;
-
-// 	hexadecimal = "0123456789abcdef";
-// 	if (is_signed && ((intmax_t)number < 0x0))
-// 	{
-// 		number = -(intmax_t)number;
-// 		*length += write(STDOUT_FILENO, "-", sizeof(char));
-// 	}
-// 	if (number >= (uintmax_t)base)
-// 		ft_put_digit((number / base), base, length, false);
-// 	*length += write(STDOUT_FILENO, &hexadecimal[number % base], sizeof(char));
-// }
-
 static void ft_put_digit(intmax_t number, int base, int *length)
 {
 	char *hexadecimal;
@@ -85,17 +69,6 @@ static void ft_put_unsigned(uintmax_t number, int base, int *length)
 	*length += write(STDOUT_FILENO, &hexadecimal[number % base], sizeof(char));
 }
 
-
-static void ft_put_unsigned(uintmax_t number, int base, int *length)
-{
-    char *digits = "0123456789abcdef";
-
-    if (number >= base)
-        ft_put_unsigned(number / base, base, length);
-    *length += write(STDOUT_FILENO, &digits[number % base], 1);
-}
-
-
 static void	ft_handle_format(const char *format, va_list arguments, int *length)
 {
 	if (*format == '%')
@@ -103,9 +76,9 @@ static void	ft_handle_format(const char *format, va_list arguments, int *length)
 	else if (*format == 's')
 		ft_put_string(va_arg(arguments, char *), length);
 	else if (*format == 'd')
-		ft_put_digit(va_arg(args, int), 10, length);
+		ft_put_digit(va_arg(arguments, int), 10, length);
 	else if (*format == 'x')
-		ft_put_unsigned(va_arg(args, unsigned int), 16, length);
+		ft_put_unsigned(va_arg(arguments, unsigned int), 16, length);
 }
 
 static int	ft_strcmp(char *s1, char *s2)
