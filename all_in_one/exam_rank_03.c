@@ -6,7 +6,7 @@
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:58:03 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/09/20 12:26:40 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:42:33 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,22 +116,40 @@ static char	*ft_strcpy(char *destination, char *source)
 
 static char	*ft_strdup(char *string)
 {
-	size_t	length_source;
-	char	*duplicate;
+	char	*duplicate_string;
+	size_t	length_source_string;
 
-	length_source = 0x0;
-	duplicate = NULL;
+	length_source_string = 0x0;
+	duplicate_string = NULL;
 	if (!string)
 		return (NULL);
-	length_source = ft_strlen(string);
-	duplicate = (char *)malloc(sizeof(char) * (length_source + 0x1));
-	if (duplicate == NULL)
+	length_source_string = ft_strlen(string);
+	duplicate_string = (char *)malloc(sizeof(char) * \
+		(length_source_string + 0x1));
+	if (duplicate_string == NULL)
 		return (NULL);
-	ft_strcpy(duplicate, string);
-	return (duplicate);
+	ft_strcpy(duplicate_string, string);
+	return (duplicate_string);
 }
 
-static char	*ft_strjoin(char *string_one, char *string_two)
+// static char	*ft_strdup(char *string)
+// {
+// 	char	*duplicate;
+// 	size_t	length_source;
+
+// 	length_source = 0x0;
+// 	duplicate = NULL;
+// 	if (!string)
+// 		return (NULL);
+// 	length_source = ft_strlen(string);
+// 	duplicate = (char *)malloc(sizeof(char) * (length_source + 0x1));
+// 	if (duplicate == NULL)
+// 		return (NULL);
+// 	ft_strcpy(duplicate, string);
+// 	return (duplicate);
+// }
+
+static char	*ft_join_line_and_buffer(char *string_one, char *string_two)
 {
 	char	*joined_strings;
 	size_t	length_string_one;
@@ -168,7 +186,7 @@ static void	ft_update_buffer_and_line(char *buffer, char *new_line_in_line)
 		buffer[0x0] = '\0';
 }
 
-static	char	*ft_read_line(int fd, char *line, char *buffer)
+static	char	*ft_read_line(int file_descriptor, char *line, char *buffer)
 {
 	ssize_t	bytes_read;
 	char	*new_line_in_line;
@@ -177,11 +195,11 @@ static	char	*ft_read_line(int fd, char *line, char *buffer)
 	new_line_in_line = NULL;
 	while (!new_line_in_line)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		bytes_read = read(file_descriptor, buffer, BUFFER_SIZE);
 		if (bytes_read <= 0x0)
 			break ;
 		buffer[bytes_read] = '\0';
-		line = ft_strjoin(line, buffer);
+		line = ft_join_line_and_buffer(line, buffer);
 		new_line_in_line = ft_strchr(line, '\n');
 	}
 	if (!line || ft_strlen(line) == 0x0)
