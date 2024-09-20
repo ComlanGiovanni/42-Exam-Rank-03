@@ -6,7 +6,8 @@ Exam Rank 2 =>  [ft_printf](https://github.com/ComlanGiovanni/42-Exam-Rank-03/bl
 		- You need to validate 1 question to get 100.
 		- Each time you fail the exam you restart.
 		- There is no Norminette in the exam.
-		- All the solution of the repo are normed(v3).
+		- All the solution of the repo are normed(v3) not gnl.....
+		- If someone can norm the main gnl and keep it clean code PR the code.
 		- 2 Assigment, all main in train.c of each one.
 
 ![main test](https://badgen.net/badge/main/Main-Test/red?icon=github&label)
@@ -18,12 +19,12 @@ Exam Rank 2 =>  [ft_printf](https://github.com/ComlanGiovanni/42-Exam-Rank-03/bl
 	/* ************************************************************************** */
 	/*                                                                            */
 	/*                                                        :::      ::::::::   */
-	/*   42_Exam_Rank_03.c  (Version -> 2022)               :+:      :+:    :+:   */
+	/*   42_Exam_Rank_03.c  (Version -> 2024)               :+:      :+:    :+:   */
 	/*                                                    +:+ +:+         +:+     */
-	/*   By: gcomlan <gcomlan@student.42.fr>            +#+  +:+       +#+        */
+	/*   By: gcomlan <gicomlan@student.42.fr>           +#+  +:+       +#+        */
 	/*                                                +#+#+#+#+#+   +#+           */
-	/*   Created: 1999/01/01 23:59:59 by gcomlan           #+#    #+#             */
-	/*   Updated: 1900/01/01 00:00:01 by gcomlan          ###   ########.fr       */
+	/*   Created: 1999/01/01 23:59:59 by gicomlan          #+#    #+#             */
+	/*   Updated: 1900/01/01 00:00:01 by gicomlan         ###   ########.fr       */
 	/*                                                                            */
 	/* ************************************************************************** */
 ```
