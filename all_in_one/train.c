@@ -6,7 +6,7 @@
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:25:38 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/09/21 13:05:57 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/09/21 13:08:16 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,68 +21,92 @@
 #include <string.h>
 
 # define BUFFER_SIZE 42
-#define BUFFER_SIZE 42
 
-#include <unistd.h>
-#include <stdlib.h>
-
-char *get_next_line(int fd)
-{
-    static char buf[BUFFER_SIZE];
-    static ssize_t bytes_in_buf = 0, buf_pos = 0;
-    char *line = NULL;
-    size_t line_len = 0, line_cap = BUFFER_SIZE;
-    ssize_t bytes_read;
-
-    if (fd < 0 || BUFFER_SIZE <= 0)
-        return NULL;
-    line = malloc(line_cap + 1);
-    if (!line)
-        return NULL;
-    while (1)
-    {
-        if (buf_pos >= bytes_in_buf)
-        {
-            bytes_in_buf = read(fd, buf, BUFFER_SIZE);
-            if (bytes_in_buf <= 0)
-                break;
-            buf_pos = 0;
-        }
-        while (buf_pos < bytes_in_buf)
-        {
-            char c = buf[buf_pos++];
-            if (line_len >= line_cap)
-            {
-                char *new_line = malloc(line_cap + BUFFER_SIZE + 1);
-                if (!new_line)
-                {
-                    free(line);
-                    return NULL;
-                }
-                for (size_t i = 0; i < line_len; i++)
-                    new_line[i] = line[i];
-                free(line);
-                line = new_line;
-                line_cap += BUFFER_SIZE;
-            }
-            line[line_len++] = c;
-            if (c == '\n')
-                break;
-        }
-        if (line_len > 0 && line[line_len - 1] == '\n')
-            break;
-    }
-    if (line_len == 0)
-    {
-        free(line);
-        return NULL;
-    }
-    line[line_len] = '\0';
-    return line;
+size_t ft_strlen(const char *s) {
+    const char *p = s;
+    while (*p) p++;
+    return p - s;
 }
 
+char *ft_strchr(const char *s, int c) {
+    while (*s && *s != (char)c) s++;
+    return (*s == (char)c || c == '\0') ? (char *)s : NULL;
+}
 
+char *ft_strcpy(char *d, const char *s) {
+    char *p = d;
+    while ((*p++ = *s++));
+    return d;
+}
 
+char *ft_strdup(const char *s) {
+    if (!s) return NULL;
+    char *d = malloc(ft_strlen(s) + 1);
+    return d ? ft_strcpy(d, s) : NULL;
+}
+
+static char *ft_join_line_and_buffer(char *str_one, char *str_two)
+{
+	char	*join;
+
+	if (!str_one || !str_two)
+		return (free(str_one), NULL);
+	if (!(join = (char *)malloc(sizeof(char) * \
+		(ft_strlen(str_one) + ft_strlen(str_two)) + 0x1)))
+		return (free(str_one), NULL);
+	ft_strcpy(join, str_one);
+	ft_strcpy((join + ft_strlen(str_one)), str_two);
+	return (free(str_one), join);
+}
+
+static void	ft_update_buffer_and_line(char *buffer, char *new_line_in_line)
+{
+	if (new_line_in_line)
+	{
+		ft_strcpy(buffer, (new_line_in_line + 0x1));
+		*(new_line_in_line + 0x1) = '\0';
+	}
+	else
+		buffer[0x0] = '\0';
+}
+
+static char	*ft_read_line(int fd, char *line, char *buff)
+{
+	ssize_t	bytes_read;
+	char	*new_line_in_line;
+
+	bytes_read = 0x0;
+	new_line_in_line = NULL;
+	while (!(new_line_in_line = ft_strchr(line, '\n')))
+	{
+		bytes_read = read(fd, buff, BUFFER_SIZE);
+		if (bytes_read <= 0)
+			break ;
+		buff[bytes_read] = '\0';
+		line = ft_join_line_and_buffer(line, buff);
+	}
+	if (!line || ft_strlen(line) == 0x0)
+		return (free(line), NULL);
+	return (line);
+}
+
+static char	*get_next_line(int fd)
+{
+	char		*line;
+	char		*new_line_in_line;
+	static char	buffer[BUFFER_SIZE + 0x1] = {'\0'};
+
+	line = NULL;
+	new_line_in_line = NULL;
+	if ((fd < 0x0) || (BUFFER_SIZE <= 0x0))
+		return (NULL);
+	line = ft_strdup(buffer);
+	if (!(line = ft_read_line(fd, line, buffer)))
+		return (NULL);
+	new_line_in_line = ft_strchr(line, '\n');
+	ft_update_buffer_and_line(buffer, new_line_in_line);
+	return (line);
+}
 
 static int	ft_open_file(char *filename)
 {
