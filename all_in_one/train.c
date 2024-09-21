@@ -6,7 +6,7 @@
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:25:38 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/09/21 12:57:57 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/09/21 13:05:57 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,71 +21,67 @@
 #include <string.h>
 
 # define BUFFER_SIZE 42
+#define BUFFER_SIZE 42
 
-size_t ft_strlen(const char *s) {
-    const char *p = s;
-    while (*p) p++;
-    return p - s;
-}
+#include <unistd.h>
+#include <stdlib.h>
 
-char *ft_strchr(const char *s, int c) {
-    while (*s && *s != c) s++;
-    return (*s == c || c == '\0') ? (char *)s : NULL;
-}
+char *get_next_line(int fd)
+{
+    static char buf[BUFFER_SIZE];
+    static ssize_t bytes_in_buf = 0, buf_pos = 0;
+    char *line = NULL;
+    size_t line_len = 0, line_cap = BUFFER_SIZE;
+    ssize_t bytes_read;
 
-char *ft_strcpy(char *d, const char *s) {
-    char *p = d;
-    while ((*p++ = *s++));
-    return d;
-}
-
-char *ft_strdup(const char *s) {
-    char *d = malloc(ft_strlen(s) + 1);
-    return d ? ft_strcpy(d, s) : NULL;
-}
-
-char *ft_strjoin(char *s1, char *s2) {
-    size_t len1 = ft_strlen(s1), len2 = ft_strlen(s2);
-    char *join = malloc(len1 + len2 + 1);
-    if (!join) return (free(s1), NULL);
-    ft_strcpy(join, s1);
-    ft_strcpy(join + len1, s2);
-    return (free(s1), join);
-}
-
-void ft_update_buffer(char *buffer, char *newline) {
-    if (newline) {
-        ft_strcpy(buffer, newline + 1);
-        newline[1] = '\0';
-    } else {
-        buffer[0] = '\0';
+    if (fd < 0 || BUFFER_SIZE <= 0)
+        return NULL;
+    line = malloc(line_cap + 1);
+    if (!line)
+        return NULL;
+    while (1)
+    {
+        if (buf_pos >= bytes_in_buf)
+        {
+            bytes_in_buf = read(fd, buf, BUFFER_SIZE);
+            if (bytes_in_buf <= 0)
+                break;
+            buf_pos = 0;
+        }
+        while (buf_pos < bytes_in_buf)
+        {
+            char c = buf[buf_pos++];
+            if (line_len >= line_cap)
+            {
+                char *new_line = malloc(line_cap + BUFFER_SIZE + 1);
+                if (!new_line)
+                {
+                    free(line);
+                    return NULL;
+                }
+                for (size_t i = 0; i < line_len; i++)
+                    new_line[i] = line[i];
+                free(line);
+                line = new_line;
+                line_cap += BUFFER_SIZE;
+            }
+            line[line_len++] = c;
+            if (c == '\n')
+                break;
+        }
+        if (line_len > 0 && line[line_len - 1] == '\n')
+            break;
     }
-}
-
-char *ft_read_line(int fd, char *line, char *buffer) {
-    ssize_t bytes;
-    char *newline;
-    while (!(newline = ft_strchr(line, '\n'))) {
-        bytes = read(fd, buffer, BUFFER_SIZE);
-        if (bytes <= 0) break;
-        buffer[bytes] = '\0';
-        line = ft_strjoin(line, buffer);
-        if (!line) return NULL;
+    if (line_len == 0)
+    {
+        free(line);
+        return NULL;
     }
-    return (line && *line) ? line : (free(line), NULL);
-}
-
-char *get_next_line(int fd) {
-    static char buffer[BUFFER_SIZE + 1] = {0};
-    if (fd < 0 || BUFFER_SIZE <= 0) return NULL;
-    char *line = ft_strdup(buffer);
-    if (!line) return NULL;
-    line = ft_read_line(fd, line, buffer);
-    if (!line) return NULL;
-    char *newline = ft_strchr(line, '\n');
-    ft_update_buffer(buffer, newline);
+    line[line_len] = '\0';
     return line;
 }
+
+
 
 
 static int	ft_open_file(char *filename)
