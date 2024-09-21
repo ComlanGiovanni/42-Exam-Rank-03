@@ -6,23 +6,12 @@
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:25:38 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/09/21 13:09:38 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/09/21 13:11:03 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+//"Practice doesn't make perfect. Perfect practice makes perfect."
+//"L'entraînement ne rend pas parfait. C'est l'entraînement parfait qui rend parfait."
 
 
 static int	ft_open_file(char *filename)
