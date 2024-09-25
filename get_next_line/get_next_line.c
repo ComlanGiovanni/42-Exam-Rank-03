@@ -6,7 +6,7 @@
 /*   By: gicomlan <gicomlan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:03:10 by gicomlan          #+#    #+#             */
-/*   Updated: 2024/09/20 11:00:33 by gicomlan         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:18:54 by gicomlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,18 @@ char	*ft_strcpy(char *destination, char *source)
 	return (destination);
 }
 
-char	*ft_strdup(char *string)
+char	*ft_strdup(char *source)
 {
 	size_t	length_source;
 	char	*duplicate;
 
-	length_source = ft_strlen(string);
+	// duplicate = NULL;
+	// length_source = 0x0;
+	length_source = ft_strlen(source);
 	duplicate = (char *)malloc(sizeof(char) * (length_source + 0x1));
 	if (duplicate == NULL)
 		return (NULL);
-	ft_strcpy(duplicate, string);
+	ft_strcpy(duplicate, source);
 	return (duplicate);
 }
 
@@ -140,4 +142,38 @@ char	*get_next_line(int fd)
 	new_line_in_line = ft_strchr(line, '\n');
 	ft_update_buffer_and_line(buffer, new_line_in_line);
 	return (line);
+}
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+int main(int argc, char **argv)
+{
+    int     fd;
+    char    *line;
+    int     line_count = 0;
+
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
+        return 1;
+    }
+
+    fd = open(argv[1], O_RDONLY);
+    if (fd == -1)
+    {
+        perror("open");
+        return 1;
+    }
+
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("Line %d: %s", ++line_count, line);
+        free(line);
+    }
+
+    close(fd);
+    return 0;
 }
