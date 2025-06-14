@@ -1,0 +1,11 @@
+ft_scanf:
+Allowed functions: fgetc, ungetc, ferror, isspace, isdigit, stdin, va_start_, va_arg ...
+----------------------------------------------------------------------------------------
+
+Write a function  named `ft_scanf` that will mimic the real scanf
+- Manage conversions only: s d and c
+- You don't have to handle the maximum field width
+- You don't have to handle the type modifier characters
+
+Your function must be declared :
+int ft_scanf(const char *, ...)

@@ -1,0 +1,22 @@
+Assignment name			: filter
+Expected files			: *.c *.h ???
+Allowed functions   : malloc, free, calloc, realloc, write, read, perror
+-------------------------------------------------------
+
+Write a program that reads from the standard input and replaces every occurrence
+of a given word (provided as an argument) with a sequence of * of the same length.
+
+If no argument is given or if the input is empty, the program should return an error.
+
+We will not test with an empty string as an argument.
+
+You will display the modified text, preserving the rest of the input.
+
+Example:
+$> echo "The secret word is hidden in this text." | ./filter secret  
+The ****** word is hidden in this text.
+
+$> echo "banana banana apple" | ./filter banana  
+****** ****** apple
+
+Memory management is important: any allocated memory must be freed properly.

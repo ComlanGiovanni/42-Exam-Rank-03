@@ -1,0 +1,31 @@
+Assignment name			: ft_scanf
+Expected files			: *.c *.h ??? 
+Allowed functions   : va_start, va_arg, va_end, write ???? 
+
+-------------------------------------------------------
+
+Write a program that implements a simplified version of scanf, named ft_scanf.
+
+The function ft_scanf should parse the format string and read user input accordingly.
+It should support the following format specifiers:
+
+%c : Reads a single character.
+
+%d : Reads an integer (only positive numbers are guaranteed to be tested).
+
+Whitespace in the format string should be handled correctly (i.e., 
+multiple spaces and newlines should be skipped in the input).
+
+Example:
+
+$> ./ft_scanf  
+ft_scanf :  
+A  
+A
+
+$> ./ft_scanf  
+ft_scanf :  
+42  
+42
+
+Memory management and correct handling of stdin buffering are expected.
